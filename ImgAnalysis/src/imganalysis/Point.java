@@ -8,13 +8,15 @@ public class Point {
 		this.y = y;
 		this.value = value;
 	}
-	
+
 	@Override
 	public boolean equals(Object p) {
-		if (!(p instanceof Point)) return false;
-		Point f = (Point)p;
-		if (f.value == this.value && f.x == this.x && f.y == this.y) return true;
-		
+		if (!(p instanceof Point))
+			return false;
+		Point f = (Point) p;
+		if (f.value == this.value && f.x == this.x && f.y == this.y)
+			return true;
+
 		return false;
 	}
 }
