@@ -9,7 +9,9 @@ public class DFSArray {
 	private int ROW;
 	private int COL;
 	private int size;
-
+	private int recursionCount = 0;
+	private final int RECURSION_LIMIT = (128 * 128) / 4; // Limit recursions to a fourth of the image size
+	
 	private ArrayList<ArrayList<Point>> temp;
 
 	public DFSArray(int ROW, int COL, int tolerance) {
@@ -23,7 +25,7 @@ public class DFSArray {
 		return (row >= 0) && (row < ROW) && (col >= 0) && (col < COL)
 				&& (MathHelper.checkTolerance(M[row][col], targetValue, tolerance) && !visited[row][col]);
 	}
-
+	
 	private void DepthFirstSearch(int M[][], int row, int col, boolean visited[][]) {
 		int rowNbr[] = new int[] { -1, -1, -1, 0, 0, 1, 1, 1 };
 		int colNbr[] = new int[] { -1, 0, 1, -1, 1, -1, 0, 1 };
@@ -34,7 +36,8 @@ public class DFSArray {
 		size++;
 		// Recur for all connected neighbors
 		for (int k = 0; k < 8; ++k)
-			if (isSafe(M, row + rowNbr[k], col + colNbr[k], visited)) {
+			if (isSafe(M, row + rowNbr[k], col + colNbr[k], visited) && recursionCount < RECURSION_LIMIT) {
+				recursionCount++;
 				DepthFirstSearch(M, row + rowNbr[k], col + colNbr[k], visited);
 			}
 	}
@@ -55,8 +58,9 @@ public class DFSArray {
 
 					size = 0;
 
+					recursionCount = 0;
+					
 					DepthFirstSearch(M, entryPoints[i], entryPoints[j], visited);
-
 					++count;
 				}
 		return temp;

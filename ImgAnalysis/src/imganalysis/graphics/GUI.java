@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.HashMap;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -32,6 +33,7 @@ public class GUI {
 		private int[][] map;
 		private int[][] firstImage;
 		private int[][] secondImage;
+		private HashMap<Integer, Color> colorMap = new HashMap<Integer, Color>();
 
 		public TestPane(int[][] firstImage, int[][] secondImage, int[][] map) {
 			this.map = map;
@@ -51,16 +53,13 @@ public class GUI {
 
 			for (int y = 0; y < map.length; y++) {
 				for (int x = 0; x < map[0].length; x++) {
-					g2d.setColor(randomColor());
 
-					if (map[y][x] == 0)
-						g2d.setColor(Color.BLACK);
+					g2d.setColor(setMapColor(map[y][x]));
 
 					g2d.drawRect(x + 1, y + 1, 1, 1);
 				}
 			}
 
-			//
 			int addColor = 225;
 			for (int y = 0; y < firstImage.length; y++) {
 				for (int x = 0; x < firstImage[0].length; x++) {
@@ -90,6 +89,20 @@ public class GUI {
 		}
 
 		private Random random = new Random();
+
+		private Color setMapColor(int mapData) {
+			if (mapData == 0) {
+				return Color.BLACK;
+			} else {
+				if (colorMap.get(mapData) != null) {
+					return colorMap.get(mapData);
+				} else {
+					Color mapColor = randomColor();
+					colorMap.put(mapData, mapColor);
+					return mapColor;
+				}
+			}
+		}
 
 		private Color randomColor() {
 			switch (random.nextInt(12)) {

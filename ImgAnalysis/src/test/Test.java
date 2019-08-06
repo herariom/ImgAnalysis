@@ -10,7 +10,7 @@ public class Test {
 		int[][] img1 = LoadImage.loadImage("res/test-image-larger.png");
 		int[][] img2 = LoadImage.loadImage("res/test-image-larger-modified.png");
 
-		new GUI(img1, img2, (new ImgAnalysis().run(img1, img2, 5, 64, 0.8)));
+		new GUI(img1, img2, (new ImgAnalysis().run(img1, img2, 25, 16, 0.8)));
 	}
 
 }
